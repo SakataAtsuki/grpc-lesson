@@ -3,6 +3,7 @@ module grpc-lesson
 go 1.20
 
 require (
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.29.0
 )
