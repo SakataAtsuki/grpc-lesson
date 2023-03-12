@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	"grpc-lesson/pb"
 	"io"
 	"log"
@@ -50,6 +52,14 @@ func callDownload(client pb.FileServiceClient) {
 			break
 		}
 		if err != nil {
+			resErr, ok := status.FromError(err)
+			if ok {
+				if resErr.Code() == codes.NotFound {
+					log.Fatalf("Error Code: %v, Error Message: %v", resErr.Code(), resErr.Message())
+				} else {
+					log.Fatalln("unknown grpc error")
+				}
+			}
 			log.Fatalln(err)
 		}
 
